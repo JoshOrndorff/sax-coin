@@ -1,21 +1,27 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use sp_core::sr25519;
 use sp_std::vec::Vec;
 use sp_runtime::RuntimeString;
 use frame_support::{
 	decl_module, decl_storage, decl_error, ensure,
-	weights::{SimpleDispatchInfo, Weight},
-	dispatch::WeighData,
+	traits::Currency,
+	weights::SimpleDispatchInfo,
 };
 use system::ensure_none;
 use sp_inherents::{InherentIdentifier, InherentData, ProvideInherent, IsFatalError};
 #[cfg(feature = "std")]
 use sp_inherents::ProvideInherentData;
 use codec::{Encode, Decode};
+use core::convert::TryFrom;
 
 /// The pallet's configuration trait. Nothing to configure.
-pub trait Trait: system::Trait {}
+pub trait Trait: system::Trait {
+	//TODO something to tell me what the per-block reward is
+	// Or maybe just integrate that into this same pallet.
+	type Currency: Currency<<Self as system::Trait>::AccountId>;
+}
+
+type BalanceOf<T> = <<T as Trait>::Currency as Currency<<T as system::Trait>::AccountId>>::Balance;
 
 decl_error! {
 	pub enum Error for Module<T: Trait> {
@@ -26,7 +32,7 @@ decl_error! {
 
 decl_storage! {
 	trait Store for Module<T: Trait> as Rewards {
-		Author: Option<sr25519::Public>;
+		Author: Option<T::AccountId>;
 	}
 }
 
@@ -35,38 +41,25 @@ decl_module! {
 		type Error = Error<T>;
 
 		#[weight = SimpleDispatchInfo::FixedOperational(10_000)]
-		fn set_author(origin, author: sr25519::Public) {
+		fn set_author(origin, author: T::AccountId) {
 			ensure_none(origin)?;
-			ensure!(Author::get().is_none(), Error::<T>::AuthorAlreadySet);
+			ensure!(Author::<T>::get().is_none(), Error::<T>::AuthorAlreadySet);
 
-			<Self as Store>::Author::put(author);
+			Author::<T>::put(author);
 		}
 
-		fn on_initialize() -> Weight {
-			// Reset the author to None at the beginning of the block
+		fn on_finalize(_n: T::BlockNumber) {
+
+			//TODO grab reward from storage
+			let reward = BalanceOf::<T>::try_from(1000).ok().expect("1000 fits");
+
+			if let Some(author) = Author::<T>::get() {
+				drop(T::Currency::deposit_creating(&author, reward));
+			}
+
+			// Reset the author to none for the next block.
 			<Self as Store>::Author::kill();
-
-			//TODO is this right? I cribbed it from babe pallet.
-			SimpleDispatchInfo::default().weigh_data(())
 		}
-	}
-}
-
-//TODO maybe make the trait generic over the "account" type
-/// A trait to find the author (miner) of the block.
-pub trait BlockAuthor {
-	fn block_author() -> Option<sr25519::Public>;
-}
-
-impl BlockAuthor for () {
-	fn block_author() -> Option<sr25519::Public> {
-		None
-	}
-}
-
-impl<T: Trait> BlockAuthor for Module<T> {
-	fn block_author() -> Option<sr25519::Public> {
-		Author::get()
 	}
 }
 
@@ -131,7 +124,7 @@ impl<T: Trait> ProvideInherent for Module<T> {
 			.expect("Gets and decodes authorship inherent data")?;
 
 		// Decode the Vec<u8> into an actual author
-		let author = sr25519::Public::decode(&mut &author_raw[..])
+		let author = T::AccountId::decode(&mut &author_raw[..])
 			.expect("Decodes author raw inherent data");
 
 		Some(Call::set_author(author))

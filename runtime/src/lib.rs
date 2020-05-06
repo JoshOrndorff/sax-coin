@@ -24,8 +24,6 @@ use sp_runtime::{
 	},
 	transaction_validity::{
 		TransactionValidity,
-		TransactionValidityError,
-		InvalidTransaction,
 		TransactionSource,
 	},
 };
@@ -215,7 +213,9 @@ impl difficulty::Trait for Runtime {
 	type MinDifficulty = DampFactor;
 }
 
-impl block_author::Trait for Runtime {}
+impl block_author::Trait for Runtime {
+	type Currency = Balances;
+}
 
 construct_runtime!(
 	pub enum Runtime where

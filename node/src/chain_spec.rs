@@ -1,4 +1,4 @@
-use sp_core::{Pair, Public, sr25519, H256};
+use sp_core::{Pair, Public, sr25519};
 use runtime::{
 	AccountId, BalancesConfig, GenesisConfig, DifficultyAdjustmentConfig,
 	SudoConfig, SystemConfig, WASM_BINARY, Signature,
