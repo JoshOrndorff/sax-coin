@@ -3,7 +3,7 @@
 use std::sync::Arc;
 use sc_client::LongestChain;
 use sc_client_api::ExecutorProvider;
-use utxo_runtime::{self, opaque::Block, RuntimeApi};
+use runtime::{self, opaque::Block, RuntimeApi};
 use sc_service::{error::{Error as ServiceError}, AbstractService, Configuration, ServiceBuilder};
 use sp_inherents::InherentDataProviders;
 use sc_executor::native_executor_instance;
@@ -17,8 +17,8 @@ use parity_scale_codec::Encode;
 // Our native executor instance.
 native_executor_instance!(
 	pub Executor,
-	utxo_runtime::api::dispatch,
-	utxo_runtime::native_version,
+	runtime::api::dispatch,
+	runtime::native_version,
 );
 
 pub fn build_inherent_data_providers(sr25519_public_key: sr25519::Public) -> Result<InherentDataProviders, ServiceError> {
@@ -32,7 +32,7 @@ pub fn build_inherent_data_providers(sr25519_public_key: sr25519::Public) -> Res
 
 	//if let Some(author) = author
 	providers
-		.register_provider(utxo_runtime::block_author::InherentDataProvider(
+		.register_provider(runtime::block_author::InherentDataProvider(
 			sr25519_public_key.encode(),
 		))
 		.map_err(Into::into)
@@ -51,7 +51,7 @@ macro_rules! new_full_start {
 		let inherent_data_providers = crate::service::build_inherent_data_providers($sr25519_public_key)?;
 
 		let builder = sc_service::ServiceBuilder::new_full::<
-			utxo_runtime::opaque::Block, utxo_runtime::RuntimeApi, crate::service::Executor
+			runtime::opaque::Block, runtime::RuntimeApi, crate::service::Executor
 		>($config)?
 			.with_select_chain(|_config, backend| {
 				Ok(sc_client::LongestChain::new(backend.clone()))

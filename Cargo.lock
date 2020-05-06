@@ -3551,6 +3551,68 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "535622e6be132bccd223f4bb2b8ac8d53cda3c7a6394944d3b2b33fb974f9d76"
 
 [[package]]
+name = "sax-coin"
+version = "2.0.0-alpha.6"
+dependencies = [
+ "futures 0.3.4",
+ "hex",
+ "log",
+ "parity-scale-codec",
+ "rand 0.7.3",
+ "sax-coin-runtime",
+ "sc-basic-authorship",
+ "sc-cli",
+ "sc-client",
+ "sc-client-api",
+ "sc-consensus-pow",
+ "sc-executor",
+ "sc-network",
+ "sc-service",
+ "sc-transaction-pool",
+ "sha3",
+ "sha3pow",
+ "sp-api",
+ "sp-blockchain",
+ "sp-consensus",
+ "sp-consensus-pow",
+ "sp-core",
+ "sp-inherents",
+ "sp-runtime",
+ "sp-timestamp",
+ "sp-transaction-pool",
+ "structopt",
+ "substrate-build-script-utils",
+]
+
+[[package]]
+name = "sax-coin-runtime"
+version = "2.0.0-alpha.6"
+dependencies = [
+ "frame-executive",
+ "frame-support",
+ "frame-system",
+ "hex-literal",
+ "pallet-balances",
+ "pallet-sudo",
+ "pallet-timestamp",
+ "parity-scale-codec",
+ "serde",
+ "sp-api",
+ "sp-block-builder",
+ "sp-consensus-pow",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-offchain",
+ "sp-runtime",
+ "sp-session",
+ "sp-std",
+ "sp-transaction-pool",
+ "sp-version",
+ "substrate-wasm-builder-runner",
+]
+
+[[package]]
 name = "sc-basic-authorship"
 version = "0.8.0-alpha.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5787,68 +5849,6 @@ dependencies = [
  "idna 0.2.0",
  "matches",
  "percent-encoding 2.1.0",
-]
-
-[[package]]
-name = "utxo-runtime"
-version = "2.0.0-alpha.6"
-dependencies = [
- "frame-executive",
- "frame-support",
- "frame-system",
- "hex-literal",
- "pallet-balances",
- "pallet-sudo",
- "pallet-timestamp",
- "parity-scale-codec",
- "serde",
- "sp-api",
- "sp-block-builder",
- "sp-consensus-pow",
- "sp-core",
- "sp-inherents",
- "sp-io",
- "sp-offchain",
- "sp-runtime",
- "sp-session",
- "sp-std",
- "sp-transaction-pool",
- "sp-version",
- "substrate-wasm-builder-runner",
-]
-
-[[package]]
-name = "utxo-workshop"
-version = "2.0.0-alpha.5"
-dependencies = [
- "futures 0.3.4",
- "hex",
- "log",
- "parity-scale-codec",
- "rand 0.7.3",
- "sc-basic-authorship",
- "sc-cli",
- "sc-client",
- "sc-client-api",
- "sc-consensus-pow",
- "sc-executor",
- "sc-network",
- "sc-service",
- "sc-transaction-pool",
- "sha3",
- "sha3pow",
- "sp-api",
- "sp-blockchain",
- "sp-consensus",
- "sp-consensus-pow",
- "sp-core",
- "sp-inherents",
- "sp-runtime",
- "sp-timestamp",
- "sp-transaction-pool",
- "structopt",
- "substrate-build-script-utils",
- "utxo-runtime",
 ]
 
 [[package]]

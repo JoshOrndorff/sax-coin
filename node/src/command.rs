@@ -80,7 +80,7 @@ pub fn run() -> sc_cli::Result<()> {
 			runner.run_node(
 				|config| service::new_light(config, sr25519_public_key),
 				|config| service::new_full(config, sr25519_public_key),
-				utxo_runtime::VERSION,
+				runtime::VERSION,
 			)
 		},
 	}

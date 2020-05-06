@@ -2,8 +2,8 @@
 authors = ['Parity Technologies <admin@parity.io>']
 edition = '2018'
 homepage = 'https://substrate.dev'
-name = 'utxo-runtime'
-repository = 'https://github.com/substrate-developers-hub/utxo-workshop'
+name = 'sax-coin-runtime'
+repository = 'https://github.com/joshorndorff/sax-coin'
 version = '2.0.0-alpha.6'
 
 [dependencies.balances]
