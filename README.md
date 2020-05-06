@@ -14,7 +14,7 @@ As an end-user of the network, the easiest way to begin is by launching the [hos
 ### Download Docker Image
 
 ```
-docker pull joshyorndorff/saxcoin:alpha2
+docker pull joshyorndorff/saxcoin:alpha3
 ```
 
 ### Build it Yourself
@@ -38,7 +38,7 @@ Once you have your node, you can join the live network.
 As a full node:
 ```
 # Using the Docker Image
-docker run joshyorndorff/saxcoin:alpha2 --name YOUR-NODE-NAME
+docker run joshyorndorff/saxcoin:alpha3 --name YOUR-NODE-NAME
 
 # Using a Local Binary
 ./target/release/sax-coin --name YOUR-NODE-NAME
@@ -47,7 +47,7 @@ docker run joshyorndorff/saxcoin:alpha2 --name YOUR-NODE-NAME
 As a mining node:
 ```
 # Using the Docker Image
-docker run joshyorndorff/saxcoin:alpha2 --validator --name YOUR-NODE-NAME
+docker run joshyorndorff/saxcoin:alpha3 --validator --name YOUR-NODE-NAME
 
 # Using a Local Binary
 ./target/release/sax-coin --validator --name YOUR-NODE-NAME

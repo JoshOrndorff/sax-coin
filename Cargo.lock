@@ -3568,6 +3568,7 @@ dependencies = [
  "sc-executor",
  "sc-network",
  "sc-service",
+ "sc-telemetry",
  "sc-transaction-pool",
  "sha3",
  "sha3pow",
