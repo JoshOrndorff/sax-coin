@@ -11,7 +11,7 @@ As an end-user of the network, the easiest way to begin is by launching the [hos
 
 ## Getting the Node
 
-### Download Docker Image
+### Download the Docker Image
 
 ```
 docker pull joshyorndorff/saxcoin:alpha3
